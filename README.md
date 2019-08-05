@@ -23,8 +23,6 @@
     需要广告页gomain方法中设置如下
        @Override
     public void goMain() {
-        //设置没有网络时广告位默认图片
-        AdvertisingActivity.setImageDefault(R.drawable.bg_ic);
         //设置广告位图片的url
         AdvertisingActivity.setImageUrl("http://47.100.250.181:8080/images/37WKKVZF.jpg");
         //设置是否显示跳过广告按钮
