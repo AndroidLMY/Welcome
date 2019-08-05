@@ -3,6 +3,7 @@
 implementation 'com.github.AndroidLMY:Welcome:1.0.0'
 ## 使用方法
 新建activity继承WelcomeActivity实现
+如果不需要实现广告页面直接在gomain处理跳转主页面即可
 ```
    @Override
     public void goGuide() {
@@ -21,7 +22,7 @@ implementation 'com.github.AndroidLMY:Welcome:1.0.0'
         finish();
     }
 ```
-## 如果不需要实现广告页面直接在gomain处理跳转主页面即可需要广告页gomain方法中设置如下
+## 如果需要广告页gomain方法中设置如下
  ```   
     @Override
     public void goMain() {
