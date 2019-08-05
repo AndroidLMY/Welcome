@@ -1,10 +1,10 @@
 # Welcome引导页启动页广告页封装
-## 添加依赖<br>
-implementation 'com.github.AndroidLMY:Welcome:1.0.0'<br>
-## 使用方法<br>
-新建activity继承WelcomeActivity实现<br>
+## 添加依赖
+implementation 'com.github.AndroidLMY:Welcome:1.0.0'
+## 使用方法
+新建activity继承WelcomeActivity实现
 ```
-   @Override<br>
+   @Override
     public void goGuide() {
         //设置引导页等待时间60秒，引导页图片，最终跳转的activity
         GuideActivity.show(this, 60, new int[]{
