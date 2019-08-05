@@ -150,12 +150,10 @@ public class GuideActivity extends AppCompatActivity {
 
     }
 
-
     public void goHomePage() {
         Intent intent = new Intent(this, clss);
         startActivity(intent);
         finish();
-        Toast.makeText(this, "跳转主页面", Toast.LENGTH_LONG).show();
     }
 
     private void onPageListener(int position) {
