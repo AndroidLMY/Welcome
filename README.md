@@ -3,26 +3,27 @@
 implementation 'com.github.AndroidLMY:Welcome:1.0.0'<br>
 ## 使用方法<br>
 新建activity继承WelcomeActivity实现<br>
-    @Override<br>
-    public void goGuide() {<br>
-        //设置引导页等待时间60秒，引导页图片，最终跳转的activity<br>
-        GuideActivity.show(this, 60, new int[]{<br>
-                R.drawable.bg_ic,<br>
-                R.drawable.bg_ic,<br>
-                R.drawable.bg_ic,<br>
-                R.drawable.bg_ic,<br>
-                R.drawable.bg_ic<br>
-        }, MainActivity.class);<br>
-    }<br>
-<br>
-    @Override<br>
-    public void goMain() {<br>
-        gohome();<br>
-        finish();<br>
-    }<br>
-    如果不需要实现广告页面直接在gomain处理跳转主页面即可<br>
-    需要广告页gomain方法中设置如下<br>
-       @Override
+```
+   @Override<br>
+    public void goGuide() {
+        //设置引导页等待时间60秒，引导页图片，最终跳转的activity
+        GuideActivity.show(this, 60, new int[]{
+                R.drawable.bg_ic,
+                R.drawable.bg_ic,
+                R.drawable.bg_ic,
+                R.drawable.bg_ic,
+                R.drawable.bg_ic
+        }, MainActivity.class);
+    }
+    @Override
+    public void goMain() {
+        gohome();
+        finish();
+    }
+```
+## 如果不需要实现广告页面直接在gomain处理跳转主页面即可需要广告页gomain方法中设置如下
+ ```   
+    @Override
     public void goMain() {
         //设置广告位图片的url
         AdvertisingActivity.setImageUrl("http://47.100.250.181:8080/images/37WKKVZF.jpg");
@@ -35,4 +36,9 @@ implementation 'com.github.AndroidLMY:Welcome:1.0.0'<br>
         //一定要finish当前页面
         finish();
     }
+  ```  
+
+
+
+ 
     
