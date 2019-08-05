@@ -22,19 +22,12 @@ import com.bumptech.glide.Glide;
 public class AdvertisingActivity extends AppCompatActivity {
     private ImageView ivImage;
     private TextView tvTime;
-    private static int imageResource;
     private static String imageUrl;
     private static int time;
     private static boolean isSkip;
     private CountDownTimer countDownTimer;
     private static Class<?> clss;
 
-    /**
-     * 没有网络时广告位的默认图片
-     */
-    public static void setImageDefault(int imageResource) {
-        AdvertisingActivity.imageResource = imageResource;
-    }
 
     /**
      * 有网络时网络图片的URL
@@ -67,27 +60,21 @@ public class AdvertisingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_advertising);
         initView();
-        loadImage();
     }
-
     private void initView() {
         ivImage = findViewById(R.id.iv_image);
         tvTime = findViewById(R.id.tv_time);
-        if (isSkip) {
-            tvTime.setVisibility(View.VISIBLE);
-        } else {
-            tvTime.setVisibility(View.GONE);
-        }
-        ivImage.setImageResource(imageResource);
-    }
-
-    private void loadImage() {
         if (isConnectingToInternet(this)) {
+            if (isSkip) {
+                tvTime.setVisibility(View.VISIBLE);
+            } else {
+                tvTime.setVisibility(View.GONE);
+            }
             Glide.with(this).load(imageUrl).into(ivImage);
+            setCountdown(tvTime, time);
         } else {
-            ivImage.setImageResource(imageResource);
+            closeCountdown();
         }
-        setCountdown(tvTime, time);
     }
     public boolean isConnectingToInternet(Context context) {
         ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
