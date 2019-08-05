@@ -8,7 +8,6 @@ import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -79,7 +78,6 @@ public class AdvertisingActivity extends AppCompatActivity {
         } else {
             tvTime.setVisibility(View.GONE);
         }
-        setCountdown(tvTime, time);
         ivImage.setImageResource(imageResource);
     }
 
@@ -89,9 +87,8 @@ public class AdvertisingActivity extends AppCompatActivity {
         } else {
             ivImage.setImageResource(imageResource);
         }
-
+        setCountdown(tvTime, time);
     }
-
     public boolean isConnectingToInternet(Context context) {
         ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

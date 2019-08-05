@@ -7,14 +7,6 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-    <!-- 启动页面-->
-    <style name="ThemeSplash" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:background">@drawable/bg_ic</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowFullscreen">true</item>
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
     <!--广告页-->
     <style name="ThemeAdvertising" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowNoTitle">true</item>
@@ -22,7 +14,6 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-
     <!--引导页 底部索引-->
     <declare-styleable name="IndexChangeView">
         <attr name="number" format="integer" />

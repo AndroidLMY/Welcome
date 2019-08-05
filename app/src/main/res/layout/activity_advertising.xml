@@ -16,7 +16,9 @@
         android:background="@drawable/shape_circle"
         android:gravity="center"
         android:textColor="@android:color/white"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:visibility="gone" />
+
     <ImageView
         android:id="@+id/iv_image"
         android:layout_width="match_parent"

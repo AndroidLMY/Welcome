@@ -29,9 +29,10 @@ public class GuideActivity extends AppCompatActivity {
     private int[] images;
     private static Class<?> clss;
     private static int sustaintime;
+
     public static void show(Context context, int i, int[] value, Class<?> cls) {
         clss = cls;
-        GuideActivity.sustaintime=i;
+        GuideActivity.sustaintime = i;
         Intent intent = new Intent(context, GuideActivity.class);
         intent.putExtra(KET_INT, value);
         context.startActivity(intent);
@@ -45,7 +46,6 @@ public class GuideActivity extends AppCompatActivity {
         initViews();
     }
 
-
     public void initViews() {
         viewpager = findViewById(R.id.viewpager);
         indexChangeView = findViewById(R.id.indexChangeView);
@@ -53,11 +53,12 @@ public class GuideActivity extends AppCompatActivity {
         initData();
         initListener();
     }
+
     public void initData() {
         Intent intent = getIntent();
         images = intent.getIntArrayExtra(KET_INT);
         indexChangeView.setNumber(images.length);
-        setCountdown(tvTime, sustaintime*1000);//设置停留秒数
+        setCountdown(tvTime, sustaintime * 1000);//设置停留秒数
         initAdapter();
     }
 
