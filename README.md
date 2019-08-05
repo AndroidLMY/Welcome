@@ -1,7 +1,7 @@
 # Welcome引导页启动页广告页封装
-##添加依赖<br>
+## 添加依赖<br>
 implementation 'com.github.AndroidLMY:Welcome:1.0.0'<br>
-##使用方法<br>
+## 使用方法<br>
 新建activity继承WelcomeActivity实现<br>
     @Override
     public void goGuide() {
