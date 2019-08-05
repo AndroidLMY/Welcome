@@ -3,6 +3,36 @@
 implementation 'com.github.AndroidLMY:Welcome:1.0.0'
 ## 使用方法
 ### 新建activity继承WelcomeActivity实现
+
+### 该activity需要在清单文件中引用如下主题
+
+```
+   <!-- 启动页面-->
+    <style name="ThemeSplash" parent="Theme.AppCompat.Light.NoActionBar">
+        <!--指定启动页背景-->
+        <item name="android:background">@drawable/ic_start</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+```
+清单文件引用如下
+
+```
+        <activity
+            android:name=".activity.Welcome"
+            android:theme="@style/ThemeSplash">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+```
+
+
 ### 如果不需要实现广告页面直接在gomain处理跳转主页面即可
 ```
    @Override
