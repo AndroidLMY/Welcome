@@ -20,8 +20,8 @@ import com.bumptech.glide.Glide;
  * 广告界面的设置
  */
 public class AdvertisingActivity extends AppCompatActivity {
-    private ImageView ivImage;
-    private TextView tvTime;
+    public static ImageView ivImage;
+    public TextView tvTime;
     private static String imageUrl;
     private static int time;
     private static boolean isSkip;
@@ -35,6 +35,12 @@ public class AdvertisingActivity extends AppCompatActivity {
     public static void setImageUrl(String imageUrl) {
         AdvertisingActivity.imageUrl = imageUrl;
     }
+
+
+    public static void setImageScaleType(ImageView.ScaleType scaleType) {
+        ivImage.setScaleType(scaleType);
+    }
+
 
     /**
      * 设置广告页面几秒后跳转
@@ -61,6 +67,7 @@ public class AdvertisingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_advertising);
         initView();
     }
+
     private void initView() {
         ivImage = findViewById(R.id.iv_image);
         tvTime = findViewById(R.id.tv_time);
@@ -76,6 +83,7 @@ public class AdvertisingActivity extends AppCompatActivity {
             closeCountdown();
         }
     }
+
     public boolean isConnectingToInternet(Context context) {
         ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
