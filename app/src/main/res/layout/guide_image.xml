@@ -7,8 +7,9 @@
 
     <ImageView
         android:id="@+id/image"
+        android:scaleType="fitXY"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:srcCompat="#8f8f8f" />
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
