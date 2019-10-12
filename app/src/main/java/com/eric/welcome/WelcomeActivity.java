@@ -19,6 +19,8 @@ public abstract class WelcomeActivity extends Activity {
     private static final int GO_MAIN = 100;
     private static final int GO_GUIDE = 101;
     private static final int imageng = 0;
+    public static boolean isGuide = true;
+
     Handler mhandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -45,10 +47,17 @@ public abstract class WelcomeActivity extends Activity {
         boolean isFirstRun = sharedPreferences.getBoolean(IS_FIRST_RUN, true);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         if (isFirstRun) {
-            editor.putBoolean(IS_FIRST_RUN, false);
-            editor.commit();
-            Log.i("Welcome", "首次运行");
-            mhandler.sendEmptyMessageDelayed(GO_GUIDE, DELAYED_TIME);
+            if (isFirstRun) {
+                //判断是否需要引导页
+                editor.putBoolean(IS_FIRST_RUN, false);
+                editor.commit();
+                Log.i("Welcome", "首次运行");
+                mhandler.sendEmptyMessageDelayed(GO_GUIDE, DELAYED_TIME);
+            } else {
+                //不需要直接跳转广告页面
+                mhandler.sendEmptyMessageDelayed(GO_MAIN, DELAYED_TIME);
+            }
+
         } else {
             Log.i("Welcome", "多次运行");
             mhandler.sendEmptyMessageDelayed(GO_MAIN, DELAYED_TIME);
