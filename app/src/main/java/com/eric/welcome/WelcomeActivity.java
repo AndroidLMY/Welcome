@@ -47,7 +47,7 @@ public abstract class WelcomeActivity extends Activity {
         boolean isFirstRun = sharedPreferences.getBoolean(IS_FIRST_RUN, true);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         if (isFirstRun) {
-            if (isFirstRun) {
+            if (isGuide) {
                 //判断是否需要引导页
                 editor.putBoolean(IS_FIRST_RUN, false);
                 editor.commit();
