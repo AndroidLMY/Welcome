@@ -31,12 +31,8 @@ public class AdvertisingActivity extends AppCompatActivity {
     private static Class<?> clss;
     private static AdvertisingActivity advertisingActivity;
 
-    public static AdvertisingActivity getActivity() {
-        if (advertisingActivity == null) {
-            advertisingActivity = new AdvertisingActivity();
-        }
-        return advertisingActivity;
-    }
+
+    public static ImageView.ScaleType scaleType;
 
     /**
      * 有网络时网络图片的URL
@@ -45,14 +41,6 @@ public class AdvertisingActivity extends AppCompatActivity {
         AdvertisingActivity.imageUrl = imageUrl;
     }
 
-
-    public void setImageScaleType(ImageView.ScaleType scaleType) {
-        if (ivImage == null) {
-            ivImage = findViewById(R.id.iv_image);
-        } else {
-            ivImage.setScaleType(scaleType);
-        }
-    }
 
     /**
      * 设置广告页面几秒后跳转
@@ -83,6 +71,7 @@ public class AdvertisingActivity extends AppCompatActivity {
     private void initView() {
         ivImage = findViewById(R.id.iv_image);
         tvTime = findViewById(R.id.tv_time);
+        ivImage.setScaleType(scaleType);
         if (isConnectingToInternet(this)) {
             if (isSkip) {
                 tvTime.setVisibility(View.VISIBLE);
