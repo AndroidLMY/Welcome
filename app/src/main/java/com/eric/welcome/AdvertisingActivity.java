@@ -16,18 +16,27 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 
+import java.util.Timer;
+
 /**
  * 广告界面的设置
  */
 public class AdvertisingActivity extends AppCompatActivity {
-    public static ImageView ivImage;
+    public ImageView ivImage;
     public TextView tvTime;
     private static String imageUrl;
     private static int time;
     private static boolean isSkip;
     private CountDownTimer countDownTimer;
     private static Class<?> clss;
+    private static AdvertisingActivity advertisingActivity;
 
+    public static AdvertisingActivity getActivity() {
+        if (advertisingActivity == null) {
+            advertisingActivity = new AdvertisingActivity();
+        }
+        return advertisingActivity;
+    }
 
     /**
      * 有网络时网络图片的URL
@@ -37,10 +46,13 @@ public class AdvertisingActivity extends AppCompatActivity {
     }
 
 
-    public static void setImageScaleType(ImageView.ScaleType scaleType) {
-        ivImage.setScaleType(scaleType);
+    public void setImageScaleType(ImageView.ScaleType scaleType) {
+        if (ivImage == null) {
+            ivImage = findViewById(R.id.iv_image);
+        } else {
+            ivImage.setScaleType(scaleType);
+        }
     }
-
 
     /**
      * 设置广告页面几秒后跳转
