@@ -15,6 +15,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DecodeFormat;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.Timer;
 
@@ -78,7 +80,13 @@ public class AdvertisingActivity extends AppCompatActivity {
             } else {
                 tvTime.setVisibility(View.GONE);
             }
-            Glide.with(this).load(imageUrl).into(ivImage);
+            RequestOptions options = new RequestOptions()
+                    .format(DecodeFormat.PREFER_ARGB_8888);//设置图片解码格式;
+            Glide.with(this)
+                    .asBitmap()
+                    .load(imageUrl)
+                    .apply(options)
+                    .into(ivImage);
             setCountdown(tvTime, time);
         } else {
             closeCountdown();
