@@ -32,6 +32,7 @@ public class AdvertisingActivity extends AppCompatActivity {
     private CountDownTimer countDownTimer;
     private static Class<?> clss;
     private static AdvertisingActivity advertisingActivity;
+    private static int imageint = 0;
 
 
     public static ImageView.ScaleType scaleType;
@@ -43,6 +44,13 @@ public class AdvertisingActivity extends AppCompatActivity {
         AdvertisingActivity.imageUrl = imageUrl;
     }
 
+
+    /**
+     * 有网络时网络图片的URL
+     */
+    public static void setImageInt(int imageint) {
+        AdvertisingActivity.imageint = imageint;
+    }
 
     /**
      * 设置广告页面几秒后跳转
@@ -82,11 +90,19 @@ public class AdvertisingActivity extends AppCompatActivity {
             }
             RequestOptions options = new RequestOptions()
                     .format(DecodeFormat.PREFER_ARGB_8888);//设置图片解码格式;
-            Glide.with(this)
-                    .asBitmap()
-                    .load(imageUrl)
-                    .apply(options)
-                    .into(ivImage);
+            if (imageint == 0) {
+                Glide.with(this)
+                        .asBitmap()
+                        .load(imageUrl)
+                        .apply(options)
+                        .into(ivImage);
+            } else {
+                Glide.with(this)
+                        .asBitmap()
+                        .load(imageint)
+                        .apply(options)
+                        .into(ivImage);
+            }
             setCountdown(tvTime, time);
         } else {
             closeCountdown();
