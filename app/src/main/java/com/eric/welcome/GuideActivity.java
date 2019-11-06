@@ -21,7 +21,6 @@ import com.bumptech.glide.Glide;
 
 public class GuideActivity extends AppCompatActivity {
     private ViewPager viewpager;
-    private IndexChangeView indexChangeView;
     private TextView tvTime;
     private CountDownTimer countDownTimer;
     private static final String KET_INT = "key_int";
@@ -55,13 +54,12 @@ public class GuideActivity extends AppCompatActivity {
 
     public void initViews() {
         viewpager = findViewById(R.id.viewpager);
-        indexChangeView = findViewById(R.id.indexChangeView);
         listindex = findViewById(R.id.listindex);
         tvTime = findViewById(R.id.tv_time);
         if (isIndexViewShow) {
-            indexChangeView.setVisibility(View.VISIBLE);
+            listindex.setVisibility(View.VISIBLE);
         } else {
-            indexChangeView.setVisibility(View.GONE);
+            listindex.setVisibility(View.GONE);
         }
         if (isTimeShow) {
             tvTime.setVisibility(View.VISIBLE);
@@ -74,7 +72,6 @@ public class GuideActivity extends AppCompatActivity {
     public void initData() {
         Intent intent = getIntent();
         images = intent.getIntArrayExtra(KET_INT);
-        indexChangeView.setNumber(images.length);
         setCountdown(tvTime, sustaintime * 1000);//设置停留秒数
         adapter=new IndexAdapter(this,images,0);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
@@ -99,11 +96,9 @@ public class GuideActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 if (position == 0) {
-                    indexChangeView.setViewColorChange(position);//XIANSGHI
                     adapter.setIndex(position);
                 } else {
                     adapter.setIndex(position);
-                    indexChangeView.setViewColorChange(position);
                 }
                 onPageListener(position);
             }

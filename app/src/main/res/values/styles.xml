@@ -1,5 +1,4 @@
 <resources>
-
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
@@ -14,12 +13,4 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-    <!--引导页 底部索引-->
-    <declare-styleable name="IndexChangeView">
-        <attr name="number" format="integer" />
-        <attr name="defaultColor" format="color" />
-        <attr name="selectColor" format="color" />
-        <attr name="dotRadius" format="dimension" />
-        <attr name="spaceBetween" format="dimension" />
-    </declare-styleable>
 </resources>
