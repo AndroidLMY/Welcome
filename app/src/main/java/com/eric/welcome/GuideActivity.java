@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -31,6 +33,9 @@ public class GuideActivity extends AppCompatActivity {
     public static boolean isTimeShow = true;//右上角跳过引导是否显示
     public static boolean isClick = true;//是否添加最后一页点击图片跳转主界面默认开启
 
+    private RecyclerView listindex;
+
+    private IndexAdapter adapter;
 
     public static void show(Context context, int i, int[] value, Class<?> cls) {
         clss = cls;
@@ -51,6 +56,7 @@ public class GuideActivity extends AppCompatActivity {
     public void initViews() {
         viewpager = findViewById(R.id.viewpager);
         indexChangeView = findViewById(R.id.indexChangeView);
+        listindex = findViewById(R.id.listindex);
         tvTime = findViewById(R.id.tv_time);
         if (isIndexViewShow) {
             indexChangeView.setVisibility(View.VISIBLE);
@@ -70,6 +76,11 @@ public class GuideActivity extends AppCompatActivity {
         images = intent.getIntArrayExtra(KET_INT);
         indexChangeView.setNumber(images.length);
         setCountdown(tvTime, sustaintime * 1000);//设置停留秒数
+        adapter=new IndexAdapter(this,images,0);
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        listindex.setLayoutManager(linearLayoutManager);
+        listindex.setAdapter(adapter);
         initAdapter();
     }
 
@@ -84,14 +95,14 @@ public class GuideActivity extends AppCompatActivity {
         viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
-
             @Override
             public void onPageSelected(int position) {
                 if (position == 0) {
                     indexChangeView.setViewColorChange(position);//XIANSGHI
+                    adapter.setIndex(position);
                 } else {
+                    adapter.setIndex(position);
                     indexChangeView.setViewColorChange(position);
                 }
                 onPageListener(position);
