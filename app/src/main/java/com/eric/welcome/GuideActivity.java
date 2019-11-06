@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
@@ -24,12 +23,12 @@ public class GuideActivity extends AppCompatActivity {
     private TextView tvTime;
     private CountDownTimer countDownTimer;
     private static final String KET_INT = "key_int";
-    private static final String KET_CLASS = "ket_class";
     private boolean isScrolled;
     private int[] images;
     private static Class<?> clss;
-    private static int sustaintime;
-    private static boolean isjiaobiao = true;
+    private static int sustaintime;//等待跳过引导的事件
+    private static boolean isIndexViewShow = true;//底部指示器是否显示
+    private static boolean isTimeShow = true;//右上角跳过引导是否显示
 
     public static void show(Context context, int i, int[] value, Class<?> cls) {
         clss = cls;
@@ -51,14 +50,17 @@ public class GuideActivity extends AppCompatActivity {
         viewpager = findViewById(R.id.viewpager);
         indexChangeView = findViewById(R.id.indexChangeView);
         tvTime = findViewById(R.id.tv_time);
-        if (isjiaobiao) {
+        if (isIndexViewShow) {
             indexChangeView.setVisibility(View.VISIBLE);
         } else {
             indexChangeView.setVisibility(View.GONE);
-
+        }
+        if (isTimeShow) {
+            tvTime.setVisibility(View.VISIBLE);
+        } else {
+            tvTime.setVisibility(View.GONE);
         }
         initData();
-        initListener();
     }
 
     public void initData() {
@@ -67,10 +69,6 @@ public class GuideActivity extends AppCompatActivity {
         indexChangeView.setNumber(images.length);
         setCountdown(tvTime, sustaintime * 1000);//设置停留秒数
         initAdapter();
-    }
-
-    public void initListener() {
-
     }
 
     /**
@@ -205,11 +203,18 @@ public class GuideActivity extends AppCompatActivity {
         public Object instantiateItem(ViewGroup viewGroup, int position) {
             View view = LayoutInflater.from(GuideActivity.this).inflate(R.layout.guide_image, null);
             ImageView imageView = view.findViewById(R.id.image);
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (position == images.length - 1) {
+                        closeCountdown();
+                    } else {
+                    }
+                }
+            });
             Glide.with(GuideActivity.this).load(images[position]).into(imageView);
             viewGroup.addView(view);
             return view;
         }
-
-
     }
 }
