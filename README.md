@@ -1,6 +1,6 @@
 # Welcome引导页启动页广告页封装
 ## 添加依赖
-implementation 'com.github.AndroidLMY:Welcome:1.0.3'
+implementation 'com.github.AndroidLMY:Welcome:1.1.7'
 ## 使用方法
 ### 新建activity继承WelcomeActivity实现
 
