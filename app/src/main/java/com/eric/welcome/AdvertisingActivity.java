@@ -35,7 +35,7 @@ public class AdvertisingActivity extends AppCompatActivity {
     private static int imageint = 0;
 
 
-    public static ImageView.ScaleType scaleType;
+    public static ImageView.ScaleType scaleType = ImageView.ScaleType.CENTER_CROP;
 
     /**
      * 有网络时网络图片的URL
