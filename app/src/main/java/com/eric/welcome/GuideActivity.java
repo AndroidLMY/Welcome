@@ -26,9 +26,11 @@ public class GuideActivity extends AppCompatActivity {
     private boolean isScrolled;
     private int[] images;
     private static Class<?> clss;
-    private static int sustaintime;//等待跳过引导的事件
-    private static boolean isIndexViewShow = true;//底部指示器是否显示
-    private static boolean isTimeShow = true;//右上角跳过引导是否显示
+    private static int sustaintime;//等待跳过引导的时间
+    public static boolean isIndexViewShow = true;//底部指示器是否显示
+    public static boolean isTimeShow = true;//右上角跳过引导是否显示
+    public static boolean isClick = true;//是否添加最后一页点击图片跳转主界面默认开启
+
 
     public static void show(Context context, int i, int[] value, Class<?> cls) {
         clss = cls;
@@ -203,15 +205,17 @@ public class GuideActivity extends AppCompatActivity {
         public Object instantiateItem(ViewGroup viewGroup, int position) {
             View view = LayoutInflater.from(GuideActivity.this).inflate(R.layout.guide_image, null);
             ImageView imageView = view.findViewById(R.id.image);
-            imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (position == images.length - 1) {
-                        closeCountdown();
-                    } else {
+            if (isClick) {
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (position == images.length - 1) {
+                            closeCountdown();
+                        } else {
+                        }
                     }
-                }
-            });
+                });
+            }
             Glide.with(GuideActivity.this).load(images[position]).into(imageView);
             viewGroup.addView(view);
             return view;
