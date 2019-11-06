@@ -29,6 +29,7 @@ public class GuideActivity extends AppCompatActivity {
     private int[] images;
     private static Class<?> clss;
     private static int sustaintime;
+    private static boolean isjiaobiao = true;
 
     public static void show(Context context, int i, int[] value, Class<?> cls) {
         clss = cls;
@@ -50,6 +51,12 @@ public class GuideActivity extends AppCompatActivity {
         viewpager = findViewById(R.id.viewpager);
         indexChangeView = findViewById(R.id.indexChangeView);
         tvTime = findViewById(R.id.tv_time);
+        if (isjiaobiao) {
+            indexChangeView.setVisibility(View.VISIBLE);
+        } else {
+            indexChangeView.setVisibility(View.GONE);
+
+        }
         initData();
         initListener();
     }
