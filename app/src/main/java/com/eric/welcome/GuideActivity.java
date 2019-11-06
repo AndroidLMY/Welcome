@@ -29,13 +29,11 @@ public class GuideActivity extends AppCompatActivity {
     private static Class<?> clss;
     private static int sustaintime;//等待跳过引导的时间
     public static boolean isIndexViewShow = true;//底部指示器是否显示
+    public static boolean isIsTimeClose = true;//是否设置倒计时结束自动跳转主界面
     public static boolean isTimeShow = true;//右上角跳过引导是否显示
     public static boolean isClick = true;//是否添加最后一页点击图片跳转主界面默认开启
-
     private RecyclerView listindex;
-
     private IndexAdapter adapter;
-
     public static void show(Context context, int i, int[] value, Class<?> cls) {
         clss = cls;
         GuideActivity.sustaintime = i;
@@ -73,8 +71,8 @@ public class GuideActivity extends AppCompatActivity {
         Intent intent = getIntent();
         images = intent.getIntArrayExtra(KET_INT);
         setCountdown(tvTime, sustaintime * 1000);//设置停留秒数
-        adapter=new IndexAdapter(this,images,0);
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
+        adapter = new IndexAdapter(this, images, 0);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
         listindex.setLayoutManager(linearLayoutManager);
         listindex.setAdapter(adapter);
@@ -93,6 +91,7 @@ public class GuideActivity extends AppCompatActivity {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             }
+
             @Override
             public void onPageSelected(int position) {
                 if (position == 0) {
@@ -143,7 +142,9 @@ public class GuideActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 textView.setText(0 + "秒");
-                closeCountdown();
+                if(isIsTimeClose){
+                    closeCountdown();
+                }
 
             }
         }.start();
