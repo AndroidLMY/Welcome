@@ -109,9 +109,10 @@ public class AdvertisingActivity extends AppCompatActivity {
         ivImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                advertising.ImageOnClick();
                 countDownTimer.cancel();
                 closeCountdown();
+                advertising.ImageOnClick();
+
             }
         });
     }
