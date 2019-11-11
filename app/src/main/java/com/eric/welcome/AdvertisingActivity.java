@@ -33,6 +33,7 @@ public class AdvertisingActivity extends AppCompatActivity {
     private static Class<?> clss;
     private static AdvertisingActivity advertisingActivity;
     private static int imageint = 0;
+    private static boolean isOnClick = false;
 
 
     public static ImageView.ScaleType scaleType = ImageView.ScaleType.CENTER_CROP;
@@ -107,8 +108,22 @@ public class AdvertisingActivity extends AppCompatActivity {
         } else {
             closeCountdown();
         }
-    }
+        ivImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                advertising.ImageOnClick();
+            }
+        });
 
+    }
+    public AdvertisingOnClick advertising;
+    public void setOnclick(AdvertisingOnClick advertisingOnClick) {
+        this.advertising = advertisingOnClick;
+    }
+    public interface AdvertisingOnClick {
+        void ImageOnClick();
+        void SkipOnclick();
+    }
     public boolean isConnectingToInternet(Context context) {
         ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
