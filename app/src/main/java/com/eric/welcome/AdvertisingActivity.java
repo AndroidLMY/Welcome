@@ -18,8 +18,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.request.RequestOptions;
 
-import java.util.Timer;
-
 /**
  * 广告界面的设置
  */
@@ -112,18 +110,22 @@ public class AdvertisingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 advertising.ImageOnClick();
+                countDownTimer.cancel();
+                closeCountdown();
             }
         });
-
     }
+
     public AdvertisingOnClick advertising;
+
     public void setOnclick(AdvertisingOnClick advertisingOnClick) {
         this.advertising = advertisingOnClick;
     }
+
     public interface AdvertisingOnClick {
         void ImageOnClick();
-        void SkipOnclick();
     }
+
     public boolean isConnectingToInternet(Context context) {
         ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -148,7 +150,6 @@ public class AdvertisingActivity extends AppCompatActivity {
         }
         return false;
     }
-
 
     /**
      * 设置倒计时
