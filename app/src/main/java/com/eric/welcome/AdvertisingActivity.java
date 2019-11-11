@@ -116,10 +116,10 @@ public class AdvertisingActivity extends AppCompatActivity {
         });
     }
 
-    public AdvertisingOnClick advertising;
+    public static AdvertisingOnClick advertising;
 
-    public void setOnclick(AdvertisingOnClick advertisingOnClick) {
-        this.advertising = advertisingOnClick;
+    public static void setOnclick(AdvertisingOnClick advertisingOnClick) {
+        advertising = advertisingOnClick;
     }
 
     public interface AdvertisingOnClick {
