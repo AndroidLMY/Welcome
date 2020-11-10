@@ -148,12 +148,9 @@ public class GuideActivity extends AppCompatActivity {
 
             }
         }.start();
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                textView.setEnabled(false);
-                closeCountdown();
-            }
+        textView.setOnClickListener(v -> {
+            textView.setEnabled(false);
+            closeCountdown();
         });
     }
 
@@ -213,13 +210,10 @@ public class GuideActivity extends AppCompatActivity {
             View view = LayoutInflater.from(GuideActivity.this).inflate(R.layout.guide_image, null);
             ImageView imageView = view.findViewById(R.id.image);
             if (isClick) {
-                imageView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (position == images.length - 1) {
-                            closeCountdown();
-                        } else {
-                        }
+                imageView.setOnClickListener(v -> {
+                    if (position == images.length - 1) {
+                        closeCountdown();
+                    } else {
                     }
                 });
             }

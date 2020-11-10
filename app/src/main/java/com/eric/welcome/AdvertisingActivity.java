@@ -106,14 +106,11 @@ public class AdvertisingActivity extends AppCompatActivity {
         } else {
             closeCountdown();
         }
-        ivImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                countDownTimer.cancel();
-                closeCountdown();
-                advertising.ImageOnClick();
+        ivImage.setOnClickListener(v -> {
+            countDownTimer.cancel();
+            closeCountdown();
+            advertising.ImageOnClick();
 
-            }
         });
     }
 
@@ -173,12 +170,9 @@ public class AdvertisingActivity extends AppCompatActivity {
 
             }
         }.start();
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                textView.setEnabled(false);
-                closeCountdown();
-            }
+        textView.setOnClickListener(v -> {
+            textView.setEnabled(false);
+            closeCountdown();
         });
     }
 

@@ -1,5 +1,6 @@
 //apply plugin: 'com.android.application'
 apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 28
@@ -21,6 +22,10 @@ android {
         sourceCompatibility 1.8
         targetCompatibility 1.8
     }
+    lintOptions {
+        abortOnError false
+    }
+
 }
 
 dependencies {
@@ -33,7 +38,17 @@ dependencies {
     //glide图片加载
     implementation 'com.github.bumptech.glide:glide:4.8.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
-    implementation 'androidx.recyclerview:recyclerview:1.0.0'
-
-
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
 }
+publish {
+    repoName="WelCome"//仓库名 就是一开始设置的那个 让你设置maven了 你写maven即可
+    userOrg = 'lonelyandroid'      //bintray注册的用户名
+    groupId = 'com.eric.come'         //作为组织的唯一标示 传入包名即可
+    artifactId = 'welcome'     //作为工程的唯一标示 填入welcome就行 需要保证同一个groupId下不能有两个相同的artifactId
+    publishVersion = '1.0.0'    //当前开源库的版本号
+    desc = '引导页的封装'//开源项目的描述
+    repoName="WelCome" //你的仓库名称，没有填写默认仓库是maven//这也是很多人上传仓库不对名问题最多情况，
+    website = 'https://github.com/AndroidLMY/Welcome.git' //github 托管地址
+}
+
+
