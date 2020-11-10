@@ -27,7 +27,7 @@
             android:textColor="#000000" />
     </androidx.appcompat.widget.Toolbar>
 
-    <com.eric.come.ProgressWebView
+    <WebView
         android:id="@+id/wb_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

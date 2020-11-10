@@ -8,15 +8,14 @@ import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
-import com.tencent.smtt.sdk.WebSettings;
-import com.tencent.smtt.sdk.WebView;
-import com.tencent.smtt.sdk.WebViewClient;
 
 import java.io.File;
 import java.util.HashMap;
@@ -25,7 +24,7 @@ public class WebViewActivity extends AppCompatActivity {
 
     private Toolbar toolBar;
     private TextView tvTitle;
-    private ProgressWebView webView;
+    private WebView webView;
     private String currentUrl;
     private ProgressBar mProgressBar;
     private String url;
@@ -84,7 +83,6 @@ public class WebViewActivity extends AppCompatActivity {
 
         currentUrl = url;
         clearcache();
-        mProgressBar = webView.getmProgressBar();
         webView.loadUrl(url);
         //步骤3. 复写shouldOverrideUrlLoading()方法，使得打开网页时不调用系统浏览器， 而是在本WebView中显示
         webView.setWebViewClient(new WebViewClient() {
