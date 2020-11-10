@@ -1,4 +1,4 @@
-package com.eric.welcome;
+package com.eric.come;
 
 import android.app.Activity;
 import android.content.SharedPreferences;

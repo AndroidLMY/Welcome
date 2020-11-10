@@ -1,4 +1,4 @@
-package com.eric.welcome;
+package com.eric.come;
 
 import android.content.Context;
 import android.content.Intent;
