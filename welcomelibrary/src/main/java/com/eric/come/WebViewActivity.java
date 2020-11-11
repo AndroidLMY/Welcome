@@ -5,9 +5,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -18,7 +17,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import java.io.File;
-import java.util.HashMap;
+
+/**
+ * @author lmy
+ * @功能: 进度显示WebViewActivity
+ * @Creat 2020/11/11 4:19 PM
+ * @Compony 465008238@qq.com
+ */
 
 public class WebViewActivity extends AppCompatActivity {
 
@@ -30,6 +35,7 @@ public class WebViewActivity extends AppCompatActivity {
     private String url;
     private String title;
     private static final String APP_CACAHE_DIRNAME = "/webcache";
+    private ProgressBar progressBar;
 
     public static void startActivitys(Context context, String title, String url) {
         Intent intent = new Intent(context, WebViewActivity.class);
@@ -52,27 +58,28 @@ public class WebViewActivity extends AppCompatActivity {
         toolBar = findViewById(R.id.tool_bar);
         tvTitle = findViewById(R.id.tv_title);
         webView = findViewById(R.id.wb_view);
+        progressBar = findViewById(R.id.progressBar);
         url = getIntent().getStringExtra("url");
         title = getIntent().getStringExtra("title");
         tvTitle.setText(title);
         //声明WebSettings子类
         WebSettings webSettings = webView.getSettings();
-//如果访问的页面中要与Javascript交互，则webview必须设置支持Javascript
+        //如果访问的页面中要与Javascript交互，则webview必须设置支持Javascript
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(true);
-// 若加载的 html 里有JS 在执行动画等操作，会造成资源浪费（CPU、电量）
-// 在 onStop 和 onResume 里分别把 setJavaScriptEnabled() 给设置成 false 和 true 即可
+        // 若加载的 html 里有JS 在执行动画等操作，会造成资源浪费（CPU、电量）
+        // 在 onStop 和 onResume 里分别把 setJavaScriptEnabled() 给设置成 false 和 true 即可
 
-//设置自适应屏幕，两者合用
+        //设置自适应屏幕，两者合用
         webSettings.setUseWideViewPort(true); //将图片调整到适合webview的大小
         webSettings.setLoadWithOverviewMode(true); // 缩放至屏幕的大小
 
-//缩放操作
+        //缩放操作
         webSettings.setSupportZoom(true); //支持缩放，默认为true。是下面那个的前提。
         webSettings.setBuiltInZoomControls(true); //设置内置的缩放控件。若为false，则该WebView不可缩放
         webSettings.setDisplayZoomControls(false); //隐藏原生的缩放控件
 
-//其他细节操作
+        //其他细节操作
         webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK); //关闭webview中缓存
         webView.clearCache(true);
         webSettings.setAllowFileAccess(true); //设置可以访问文件
@@ -85,6 +92,18 @@ public class WebViewActivity extends AppCompatActivity {
         clearcache();
         webView.loadUrl(url);
         //步骤3. 复写shouldOverrideUrlLoading()方法，使得打开网页时不调用系统浏览器， 而是在本WebView中显示
+        webView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                //显示进度条
+                progressBar.setProgress(newProgress);
+                if (newProgress == 100) {
+                    //加载完毕隐藏进度条
+                    progressBar.setVisibility(View.GONE);
+                }
+                super.onProgressChanged(view, newProgress);
+            }
+        });
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {

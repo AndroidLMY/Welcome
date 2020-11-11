@@ -1,7 +1,8 @@
 package com.eric.come;
 
-import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.LayoutInflater;
@@ -18,35 +19,38 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
+import com.eric.come.utils.GuideAttributes;
+
+import java.util.List;
+
+
+/**
+ * @author lmy
+ * @功能: 引导页界面
+ * @Creat 2020/11/11 4:19 PM
+ * @Compony 465008238@qq.com
+ */
 
 public class GuideActivity extends AppCompatActivity {
     private ViewPager viewpager;
-    private TextView tvTime;
+    private CountDownTextView tvTime;
     private CountDownTimer countDownTimer;
-    private static final String KET_INT = "key_int";
     private boolean isScrolled;
-    private int[] images;
-    private static Class<?> clss;
-    private static int sustaintime;//等待跳过引导的时间
-    public static boolean isIndexViewShow = true;//底部指示器是否显示
-    public static boolean isIsTimeClose = true;//是否设置倒计时结束自动跳转主界面
-    public static boolean isTimeShow = true;//右上角跳过引导是否显示
-    public static boolean isClick = true;//是否添加最后一页点击图片跳转主界面默认开启
     private RecyclerView listindex;
     private IndexAdapter adapter;
-    public static void show(Context context, int i, int[] value, Class<?> cls) {
-        clss = cls;
-        GuideActivity.sustaintime = i;
-        Intent intent = new Intent(context, GuideActivity.class);
-        intent.putExtra(KET_INT, value);
-        context.startActivity(intent);
+    private static GuideAttributes guideAttributes;
+
+    public static void show(GuideAttributes guideAttribute) {
+        guideAttributes = guideAttribute;
+        guideAttributes.getStartactivity().startActivity(new Intent(guideAttributes.getStartactivity(), GuideActivity.class));
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);//全屏
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.guide_activity);
+        guideAttributes.getStartactivity().finish();
         initViews();
     }
 
@@ -54,24 +58,34 @@ public class GuideActivity extends AppCompatActivity {
         viewpager = findViewById(R.id.viewpager);
         listindex = findViewById(R.id.listindex);
         tvTime = findViewById(R.id.tv_time);
-        if (isIndexViewShow) {
-            listindex.setVisibility(View.VISIBLE);
-        } else {
-            listindex.setVisibility(View.GONE);
-        }
-        if (isTimeShow) {
+        GradientDrawable myShape = (GradientDrawable) findViewById(R.id.tv_time).getBackground();
+        myShape.setColor(guideAttributes.getSkipTextBackgroundColor() == 0 ? getResources().getColor(R.color.skipBgColor) : getResources().getColor(guideAttributes.getSkipTextBackgroundColor()));
+        tvTime.setTextColor(guideAttributes.getSkipTextColor() == 0 ? getResources().getColor(R.color.colorWhite) : getResources().getColor(guideAttributes.getSkipTextColor()));
+        tvTime.setPargsColors(guideAttributes.getSkipProgressColor() == 0 ? R.color.colorAccent : guideAttributes.getSkipProgressColor());
+        listindex.setVisibility(guideAttributes.isIndicator() ? View.VISIBLE : View.GONE);
+        if (guideAttributes.isSkip()) {
             tvTime.setVisibility(View.VISIBLE);
+            if (guideAttributes.isCountdown()) {
+                setCountdown(tvTime, guideAttributes.getSkipTime());
+            } else {
+                setUnCountdown();
+            }
         } else {
             tvTime.setVisibility(View.GONE);
         }
         initData();
     }
 
+    private void setUnCountdown() {
+        tvTime.setText("跳过");
+        tvTime.setOnClickListener(v -> {
+            closeCountdown();
+        });
+
+    }
+
     public void initData() {
-        Intent intent = getIntent();
-        images = intent.getIntArrayExtra(KET_INT);
-        setCountdown(tvTime, sustaintime * 1000);//设置停留秒数
-        adapter = new IndexAdapter(this, images, 0);
+        adapter = new IndexAdapter(this, guideAttributes.getImagesList(), guideAttributes, 0);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
         listindex.setLayoutManager(linearLayoutManager);
@@ -84,9 +98,9 @@ public class GuideActivity extends AppCompatActivity {
      * true 不带滑动跳转   false  带滑动跳转
      */
     public void initAdapter() {
-        ViewPagerAdapter vpAdapter = new ViewPagerAdapter(images);
+        ViewPagerAdapter vpAdapter = new ViewPagerAdapter(guideAttributes.getImagesList());
         viewpager.setAdapter(vpAdapter);
-        viewpager.setOffscreenPageLimit(images.length);
+        viewpager.setOffscreenPageLimit(guideAttributes.getImagesList().size());
         viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -131,7 +145,17 @@ public class GuideActivity extends AppCompatActivity {
      * @param textView
      * @param time     1000 = 1秒;
      */
-    public void setCountdown(final TextView textView, int time) {
+    public void setCountdown(final CountDownTextView textView, int time) {
+        if (!guideAttributes.isTimeEndClick()) {
+            textView.setOnClickListener(v -> {
+                textView.setEnabled(false);
+                closeCountdown();
+            });
+        }
+        if (guideAttributes.isProgress()) {
+            tvTime.setDuration(guideAttributes.getSkipTime());
+            tvTime.start();
+        }
         //实现倒计时
         countDownTimer = new CountDownTimer(time, 1000) {
             @Override
@@ -141,17 +165,19 @@ public class GuideActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                textView.setText(0 + "秒");
-                if(isIsTimeClose){
+                textView.setText("跳过");
+                textView.reset();
+                if (guideAttributes.isTimeClose()) {
                     closeCountdown();
                 }
-
+                if (guideAttributes.isTimeEndClick()) {
+                    textView.setOnClickListener(v -> {
+                        textView.setEnabled(false);
+                        closeCountdown();
+                    });
+                }
             }
         }.start();
-        textView.setOnClickListener(v -> {
-            textView.setEnabled(false);
-            closeCountdown();
-        });
     }
 
     public void closeCountdown() {
@@ -162,7 +188,11 @@ public class GuideActivity extends AppCompatActivity {
     }
 
     public void goHomePage() {
-        Intent intent = new Intent(this, clss);
+        SharedPreferences sharedPreferences = getSharedPreferences("Defaulthomepage", 0);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("isFirstRun", false);
+        editor.commit();
+        Intent intent = new Intent(this, guideAttributes.getEndActivity());
         startActivity(intent);
         finish();
     }
@@ -175,16 +205,16 @@ public class GuideActivity extends AppCompatActivity {
      */
     private class ViewPagerAdapter extends PagerAdapter {
 
-        private int[] images;
+        private List<Integer> images;
 
-        public ViewPagerAdapter(int[] images) {
+        public ViewPagerAdapter(List<Integer> images) {
             this.images = images;
         }
 
         // 获取要滑动的控件的数量，在这里我们以滑动的广告栏为例，那么这里就应该是展示的广告图片的ImageView数量
         @Override
         public int getCount() {
-            return images.length;
+            return images.size();
         }
 
         // 来判断显示的是否是同一张图片，这里我们将两个参数相比较返回即可
@@ -209,17 +239,30 @@ public class GuideActivity extends AppCompatActivity {
         public Object instantiateItem(ViewGroup viewGroup, int position) {
             View view = LayoutInflater.from(GuideActivity.this).inflate(R.layout.guide_image, null);
             ImageView imageView = view.findViewById(R.id.image);
-            if (isClick) {
+            if (guideAttributes.isEndIndexClick()) {
                 imageView.setOnClickListener(v -> {
-                    if (position == images.length - 1) {
+                    if (position == images.size() - 1) {
                         closeCountdown();
                     } else {
                     }
                 });
             }
-            Glide.with(GuideActivity.this).load(images[position]).into(imageView);
+            Glide.with(GuideActivity.this).load(images.get(position)).into(imageView);
             viewGroup.addView(view);
             return view;
         }
     }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+            countDownTimer = null;
+        }
+        tvTime.stop();
+
+    }
+
 }
