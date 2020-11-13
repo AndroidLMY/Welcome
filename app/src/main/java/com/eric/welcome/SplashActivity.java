@@ -1,6 +1,8 @@
 package com.eric.welcome;
 
+import android.app.Activity;
 import android.os.Bundle;
+import android.widget.ImageView;
 
 import com.eric.come.activity.AdvertisingActivity;
 import com.eric.come.activity.GuideActivity;
@@ -27,6 +29,19 @@ public class SplashActivity extends WelcomeActivity {
     public void goGuide() {
         GuideAttributes attributes = new GuideAttributes.Builder(this, MainActivity.class,
                 Arrays.asList(R.drawable.guide_01, R.drawable.guide_02, R.drawable.guide_03, R.drawable.guide_04))
+                .isTimeEndClick(true)//是否倒计时结束后 才可以点击跳过按钮
+                .isCountdown(true)//是否开启倒计时
+                .isIndicator(true)//是否显示指示器
+                .isSkipText(true)//是否显示跳过按钮
+                .isTimeClose(true)//倒计时结束后 是否自动跳转
+                .isProgress(true)//是否显示倒计时 进度条
+                .isEndIndexClick(true)//是否为引导页最后一页添加点击跳转
+                .indicatorUnSelectColor(R.color.colorAccent)//指示器未选中颜色
+                .indicatorSelectColor(R.color.colorAccent)//指示器选中颜色
+                .skipTime(10)//倒计时时间
+                .skipTextColor(R.color.colorAccent)//跳过按钮文字颜色
+                .skipTextBackgroundColor(R.color.colorAccent)//跳过按钮背景色
+                .skipProgressColor(R.color.colorAccent)//跳过按钮进度条颜色
                 .build();
         GuideActivity.show(attributes);
     }
@@ -35,10 +50,19 @@ public class SplashActivity extends WelcomeActivity {
     public void goMain() {
         AdPageAttributes adPageAttributes = new AdPageAttributes.Builder(this, MainActivity.class,
                 "http://g.hiphotos.baidu.com/image/pic/item/0d338744ebf81a4c87a3add4d52a6059252da61e.jpg")
-                .isTimeClose(true)
-                .isToAdvertising(true)
-                .advertisingUrl("https://www.tmall.com/?ali_trackid=2:mm_26632258_3504122_55934697:1605249280_291_1088741852&union_lens=recoveryid:1605249280_291_1088741852&clk1=b62a2375b07b04cd0472052384461e35&upsid=b62a2375b07b04cd0472052384461e35&bxsign=tbkGF+Q0WMNbHCUyMP4lI5VSTHw2E3S08/GypzcHKSCm6uJobVZ+66/AEKkxe251xmqs//rR3p11x/NI5v9vG4P11RA4E8YpN0taFgW3BFMtAM=")
-                .advertisingTitle("天猫超市")
+                .isToAdvertising(true)//点击广告页图片是否跳转WebView Activity
+                .isTimeEndClick(true)//是否倒计时结束后 才可以点击跳过按钮
+                .isCountdown(true)//是否开启倒计时
+                .isSkipText(true)//是否显示跳过按钮
+                .isTimeClose(true)//倒计时结束后 是否自动跳转
+                .isProgress(true)//是否显示倒计时 进度条
+                .advertisingUrl("https://www.tmall.com/")//跳转WebView的url
+                .advertisingTitle("天猫超市")//跳转WebView的标题
+                .skipTextBackgroundColor(R.color.colorAccent)//跳过按钮背景色
+                .scaleType(ImageView.ScaleType.CENTER)//广告页ImageView的填充方式
+                .skipTextColor(R.color.colorAccent)//跳过按钮文字颜色
+                .skipProgressColor(R.color.colorAccent)//跳过按钮进度条颜色
+                .skipTime(10)//倒计时时间
                 .build();
         AdvertisingActivity.show(adPageAttributes);
     }

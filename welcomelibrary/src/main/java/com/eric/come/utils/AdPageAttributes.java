@@ -200,13 +200,6 @@ public class AdPageAttributes {
             return this;
         }
 
-        /**
-         * 广告页的网络图片链接
-         */
-        public Builder imageUrl(String val) {
-            imageUrl = val;
-            return this;
-        }
 
         /**
          * 广告页跳转WebView的url
@@ -232,13 +225,7 @@ public class AdPageAttributes {
             return this;
         }
 
-        /**
-         * 广告页的本地图片资源
-         */
-        public Builder imageResources(int val) {
-            imageResources = val;
-            return this;
-        }
+
 
         /**
          * 是否显示跳过按钮
