@@ -36,6 +36,10 @@ implementation 'com.lmy:welcomes:1.0.3'
 ### 如果不需要实现广告页面直接在gomain处理跳转主页面即可
 ```
    @Override
+   public boolean getIsShowGuide() {
+        return true;//返回true需要引导页  fase不需要
+   }
+   @Override
    public void goGuide() {
        GuideAttributes attributes = new GuideAttributes.Builder(this, MainActivity.class,
                Arrays.asList(R.drawable.guide_01, R.drawable.guide_02, R.drawable.guide_03, R.drawable.guide_04))
