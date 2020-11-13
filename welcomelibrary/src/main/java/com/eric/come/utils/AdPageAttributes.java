@@ -33,6 +33,7 @@ public class AdPageAttributes {
     private boolean isSkip;
     private boolean isToAdvertising;
 
+
     public ImageView.ScaleType getScaleType() {
         return scaleType;
     }

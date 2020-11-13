@@ -9,10 +9,12 @@
     <application
         android:allowBackup="true"
         android:supportsRtl="true">
-        <activity android:name=".WebViewActivity"></activity>
-        <activity android:name=".GuideActivity" />
+        <activity android:name=".activity.WebViewActivity"
+            android:theme="@style/ThemeWebView" />
+
+        <activity android:name=".activity.GuideActivity" />
         <activity
-            android:name=".AdvertisingActivity"
+            android:name=".activity.AdvertisingActivity"
             android:theme="@style/ThemeAdvertising" />
     </application>
 

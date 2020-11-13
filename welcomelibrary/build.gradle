@@ -35,9 +35,6 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-    //glide图片加载
-    implementation 'com.github.bumptech.glide:glide:4.8.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
 }
 publish {
@@ -45,7 +42,7 @@ publish {
     userOrg = 'lonelyandroid'      //bintray注册的用户名
     groupId = 'com.lmy'         //作为组织的唯一标示 传入包名即可
     artifactId = 'welcomes'     //作为工程的唯一标示 填入welcome就行 需要保证同一个groupId下不能有两个相同的artifactId
-    publishVersion = '1.0.3'    //当前开源库的版本号
+    publishVersion = '1.0.4'    //当前开源库的版本号
     desc = '引导页闪屏页广告页面的封装'//开源项目的描述
     repoName = "WelCome" //你的仓库名称，没有填写默认仓库是maven//这也是很多人上传仓库不对名问题最多情况，
     website = 'https://github.com/AndroidLMY/Welcome.git' //github 托管地址
