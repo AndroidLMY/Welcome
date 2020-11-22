@@ -50,20 +50,12 @@ public class SplashActivity extends WelcomeActivity {
     public void goMain() {
         AdPageAttributes adPageAttributes = new AdPageAttributes.Builder(this, MainActivity.class,
                 "http://g.hiphotos.baidu.com/image/pic/item/0d338744ebf81a4c87a3add4d52a6059252da61e.jpg")
-                .isToAdvertising(true)//点击广告页图片是否跳转WebView Activity
-                .isTimeEndClick(true)//是否倒计时结束后 才可以点击跳过按钮
-                .isCountdown(true)//是否开启倒计时
-                .isSkipText(true)//是否显示跳过按钮
-                .isTimeClose(true)//倒计时结束后 是否自动跳转
-                .isProgress(true)//是否显示倒计时 进度条
-                .advertisingUrl("https://www.tmall.com/")//跳转WebView的url
-                .advertisingTitle("天猫超市")//跳转WebView的标题
-                .skipTextBackgroundColor(R.color.colorAccent)//跳过按钮背景色
-                .scaleType(ImageView.ScaleType.CENTER)//广告页ImageView的填充方式
-                .skipTextColor(R.color.colorAccent)//跳过按钮文字颜色
-                .skipProgressColor(R.color.colorAccent)//跳过按钮进度条颜色
-                .skipTime(10)//倒计时时间
+                .isTimeClose(true)
+                .isTimeEndClick(false)
+                .isCountdown(true)
+                .skipTime(3)
                 .build();
         AdvertisingActivity.show(adPageAttributes);
+
     }
 }

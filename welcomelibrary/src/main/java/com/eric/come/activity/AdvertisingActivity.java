@@ -85,8 +85,11 @@ public class AdvertisingActivity extends AppCompatActivity {
 
     private void setUnCountdown() {
         tvTime.setText("跳过");
-        tvTime.setOnClickListener(v -> {
+        if (adPageAttributes.isTimeClose()) {
             closeCountdown();
+            return;
+        }
+        tvTime.setOnClickListener(v -> {
         });
     }
 
@@ -101,6 +104,11 @@ public class AdvertisingActivity extends AppCompatActivity {
         if (!adPageAttributes.isTimeEndClick()) {
             textView.setOnClickListener(v -> {
                 textView.setEnabled(false);
+                if (countDownTimer != null) {
+                    countDownTimer.cancel();
+                    countDownTimer = null;
+                }
+                tvTime.stop();
                 closeCountdown();
             });
         }
@@ -120,6 +128,7 @@ public class AdvertisingActivity extends AppCompatActivity {
                 textView.setText("跳过");
                 textView.reset();
                 if (adPageAttributes.isTimeClose()) {
+                    tvTime.setEnabled(false);
                     closeCountdown();
                 }
                 if (adPageAttributes.isTimeEndClick()) {
@@ -128,13 +137,13 @@ public class AdvertisingActivity extends AppCompatActivity {
                         closeCountdown();
                     });
                 }
-
             }
         }.start();
 
     }
 
     public void closeCountdown() {
+
         Intent intent = new Intent(this, adPageAttributes.getEndActivity());
         startActivity(intent);
         finish();
