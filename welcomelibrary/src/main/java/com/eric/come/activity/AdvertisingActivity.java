@@ -45,6 +45,10 @@ public class AdvertisingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_advertising);
         adPageAttributes.getStartactivity().finish();
+        if (adPageAttributes.isToActivity()) {
+            closeCountdown();
+            return;
+        }
         initView();
     }
 
