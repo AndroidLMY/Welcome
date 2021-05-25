@@ -32,7 +32,11 @@ public class AdPageAttributes {
     private boolean isTimeClose;
     private boolean isSkip;
     private boolean isToAdvertising;
+    private boolean isToActivity;
 
+    public boolean isToActivity() {
+        return isToActivity;
+    }
 
     public ImageView.ScaleType getScaleType() {
         return scaleType;
@@ -123,6 +127,8 @@ public class AdPageAttributes {
         private boolean isTimeClose = false;//倒计时结束后是否自动关闭界面
         private boolean isSkip = true;//是否显示右上角跳过TextView
         private boolean isToAdvertising = false;//是否为广告页添加跳转WebViewActivity功能
+        private boolean isToActivity=false;
+
 
         public Builder(Activity activity, Class<?> clss, String imageUrls) {
             startactivity = activity;
@@ -143,7 +149,13 @@ public class AdPageAttributes {
             isTimeClose = val;
             return this;
         }
-
+        /**
+         * 是否直接跳转最终界面
+         */
+        public Builder isToActivity(boolean val) {
+            isToActivity = val;
+            return this;
+        }
         /**
          * 是否开启倒计时功能
          */
@@ -226,7 +238,6 @@ public class AdPageAttributes {
         }
 
 
-
         /**
          * 是否显示跳过按钮
          */
@@ -266,5 +277,6 @@ public class AdPageAttributes {
         isTimeEndClick = builder.isTimeEndClick;
         isCountdown = builder.isCountdown;
         isTimeClose = builder.isTimeClose;
+        isToActivity = builder.isToActivity;
     }
 }
